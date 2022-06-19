@@ -47,8 +47,20 @@ class _AddExpenseNoGradientState extends State<AddExpenseNoGradient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Transaction'),
         backgroundColor: Color(0xFF21BFBD),
+        elevation: 0,
+        title: Center(child: Text(
+          "Add Transaction         ", style: TextStyle(fontSize: 25),)),
+        toolbarHeight: 60,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
       ),
       backgroundColor: Colors.grey[200],
       //
@@ -340,6 +352,7 @@ class _AddExpenseNoGradientState extends State<AddExpenseNoGradient> {
                   );
                 }
               },
+
               child: Text(
                 "Add",
 

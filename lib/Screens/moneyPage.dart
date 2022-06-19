@@ -9,6 +9,7 @@ import 'package:mini_project_ui/Screens/routine.dart';
 import 'package:mini_project_ui/Screens/upgradedr1.dart';
 import 'package:mini_project_ui/Money_mgmt/static.dart' as Static;
 import '../Money_mgmt/widgets/confirm_dialog.dart';
+import '../Money_mgmt/widgets/info_snackbar.dart';
 import 'fitnessPage.dart';
 import 'package:mini_project_ui/Money_mgmt/add_transaction.dart';
 import 'package:mini_project_ui/Money_mgmt/transaction.dart';
@@ -100,9 +101,21 @@ class _MoneyPageState extends State<MoneyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title: const Text('Money Manager'),
         backgroundColor: Color(0xFF21BFBD),
-    ),
+        elevation: 0,
+        title: Center(child: Text(
+          "Money        ", style: TextStyle(fontSize: 25),)),
+        toolbarHeight: 60,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
+      ),
       backgroundColor: Colors.grey[200],
       //
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -374,56 +387,56 @@ class _MoneyPageState extends State<MoneyPage> {
                           ),
                         ),
                       ),
-                    Container(
-                        height: 400.0,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 40.0,
-                          horizontal: 12.0,
-                        ),
-                        margin: EdgeInsets.all(
-                          12.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8),
-                            bottomLeft: Radius.circular(8),
-                            bottomRight: Radius.circular(8),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: LineChart(
-                          LineChartData(
-                            borderData: FlBorderData(
-                              show: false,
-                            ),
-                            lineBarsData: [
-                              LineChartBarData(
-                                // spots: getPlotPoints(snapshot.data!),
-                                spots: getPlotPoints(snapshot.data!),
-                                isCurved: false,
-                                barWidth: 2.5,
-                                colors: [
-                                  Static.PrimaryColor,
-                                ],
-                                showingIndicators: [200, 200, 90, 10],
-                                dotData: FlDotData(
-                                  show: true,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    // Container(
+                    //     height: 400.0,
+                    //     padding: EdgeInsets.symmetric(
+                    //       vertical: 40.0,
+                    //       horizontal: 12.0,
+                    //     ),
+                    //     margin: EdgeInsets.all(
+                    //       12.0,
+                    //     ),
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.only(
+                    //         topLeft: Radius.circular(8),
+                    //         topRight: Radius.circular(8),
+                    //         bottomLeft: Radius.circular(8),
+                    //         bottomRight: Radius.circular(8),
+                    //       ),
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //           color: Colors.grey.withOpacity(0.5),
+                    //           spreadRadius: 5,
+                    //           blurRadius: 7,
+                    //           offset:
+                    //               Offset(0, 3), // changes position of shadow
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     child: LineChart(
+                    //       LineChartData(
+                    //         borderData: FlBorderData(
+                    //           show: false,
+                    //         ),
+                    //         lineBarsData: [
+                    //           LineChartBarData(
+                    //             // spots: getPlotPoints(snapshot.data!),
+                    //             spots: getPlotPoints(snapshot.data!),
+                    //             isCurved: false,
+                    //             barWidth: 2.5,
+                    //             colors: [
+                    //               Static.PrimaryColor,
+                    //             ],
+                    //             showingIndicators: [200, 200, 90, 10],
+                    //             dotData: FlDotData(
+                    //               show: true,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
                 //
                 Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -480,9 +493,10 @@ class _MoneyPageState extends State<MoneyPage> {
               ],
             );
           } else {
-            return Text(
-              "Loading...",
-            );
+            return selectMonth();
+            //   Text(
+            //   "Loading...",
+            // );
           }
         },
       ),
@@ -586,22 +600,22 @@ Widget expenseTile(int value, String note, DateTime date, int index) {
   var Static;
   return InkWell(
     splashColor: Static.PrimaryMaterialColor[400],
-    // onTap: () {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     // deleteInfoSnackBar,
-    //   );
-    // },
-    // onLongPress: () async {
-    //   bool? answer = await showConfirmDialog(
-    //     context,
-    //     "WARNING",
-    //     "This will delete this record. This action is irreversible. Do you want to continue ?",
-    //   );
-    //   if (answer != null && answer) {
-    //     await dbHelper.deleteData(index);
-    //     setState(() {});
-    //   }
-    // },
+    onTap: () {
+      ScaffoldMessenger.of(context).showSnackBar(
+         deleteInfoSnackBar,
+      );
+    },
+    onLongPress: () async {
+      bool? answer = await showConfirmDialog(
+        context,
+        "WARNING",
+        "This will delete this record. This action is irreversible. Do you want to continue ?",
+      );
+      if (answer != null && answer) {
+        // await dbHelper.deleteData(index);
+        setState(() {});
+      }
+    },
     child: Container(
       padding: const EdgeInsets.all(18.0),
       margin: const EdgeInsets.all(8.0),
@@ -776,33 +790,35 @@ Widget incomeTile(int value, String note, DateTime date, int index) {
     ),
   );
 }
-  monthClicked(String clickedMonth) async {
-    selectedMonthIndex = months.indexOf(clickedMonth);
-    appBarTitle = clickedMonth;
-    titleClicked();
-  }
+  // monthClicked(String clickedMonth) async {
+  //   selectedMonthIndex = months.indexOf(clickedMonth);
+  //   appBarTitle = clickedMonth;
+  //   titleClicked();
+  // }
 
   // titleClicked() {
   //   isCollabsed = !isCollabsed;
   //   notifyListeners();
   // }
 
-  getColor(month) {
-    int monthIndex = months.indexOf(month);
-    // color the selected month with
-    if (monthIndex == selectedMonthIndex) {
-      return Colors.orange;
-    } else {
-      return Colors.black;
-    }
-  }
+  // Another Sub App Data
+
+  // getColor(month) {
+  //   int monthIndex = months.indexOf(month);
+  //   // color the selected month with
+  //   if (monthIndex == selectedMonthIndex) {
+  //     return Colors.orange;
+  //   } else {
+  //     return Colors.black;
+  //   }
+  // }
 
   // void closeMonthPicker() {
   //   isCollabsed = false;
   //   notifyListeners();
   // }
 
-  void titleClicked() {}
+  // void titleClicked() {}
 Widget selectMonth() {
   return Padding(
     padding: EdgeInsets.all(
@@ -814,7 +830,7 @@ Widget selectMonth() {
         InkWell(
           onTap: () {
             setState(() {
-              index = 3;
+              index = 4;
               today = DateTime(now.year, now.month - 2, today.day);
             });
           },
@@ -825,7 +841,7 @@ Widget selectMonth() {
               borderRadius: BorderRadius.circular(
                 8.0,
               ),
-              color: index == 3 ? Static.PrimaryColor : Colors.white,
+              color: index == 4 ? Colors.tealAccent[400] : Colors.white,
             ),
             alignment: Alignment.center,
             child: Text(
@@ -833,7 +849,7 @@ Widget selectMonth() {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w600,
-                color: index == 3 ? Colors.white : Static.PrimaryColor,
+                color: index == 4 ? Colors.white : Colors.teal,
               ),
             ),
           ),
@@ -852,7 +868,7 @@ Widget selectMonth() {
               borderRadius: BorderRadius.circular(
                 8.0,
               ),
-              color: index == 2 ? Static.PrimaryColor : Colors.white,
+              color: index == 2 ? Colors.tealAccent[400] : Colors.white,
             ),
             alignment: Alignment.center,
             child: Text(
@@ -860,7 +876,7 @@ Widget selectMonth() {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w600,
-                color: index == 2 ? Colors.white : Static.PrimaryColor,
+                color: index == 2 ? Colors.white : Colors.teal,
               ),
             ),
           ),
@@ -879,7 +895,7 @@ Widget selectMonth() {
               borderRadius: BorderRadius.circular(
                 8.0,
               ),
-              color: index == 1 ? Static.PrimaryColor : Colors.white,
+              color: index == 1 ? Colors.tealAccent[400] : Colors.white,
             ),
             alignment: Alignment.center,
             child: Text(
@@ -887,7 +903,7 @@ Widget selectMonth() {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w600,
-                color: index == 1 ? Colors.white : Static.PrimaryColor,
+                color: index == 1 ? Colors.white : Colors.teal,
               ),
             ),
           ),
